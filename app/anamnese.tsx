@@ -1,37 +1,76 @@
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { useState } from 'react';
-import { useRouter } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 
 export default function AnamneseScreen() {
     const [name, setName] = useState('');
     const router = useRouter();
 
     const handleSubmit = () => {
-        router.push({ pathname: '/comunicar', params: { userName: name } });
+        if (name.trim()) {
+            router.push({ pathname: '/comunicar', params: { userName: name } });
+        } else {
+            Alert.alert('Erro', 'Digite o nome da criança.');
+        }
     };
 
     return (
         <View style={styles.container}>
-            <Text style={styles.label}>Nome da criança:</Text>
+            <Stack.Screen options={{ headerShown: false }} />
+
+            <Text style={styles.title}>Anamnese</Text>
+
+            <Text style={styles.label}>Nome da criança</Text>
             <TextInput
                 style={styles.input}
-                placeholder="Digite o nome"
+                placeholder="Digite aqui..."
+                placeholderTextColor="#999"
                 value={name}
                 onChangeText={setName}
             />
-            <Button title="Salvar e Prosseguir" onPress={handleSubmit} />
+
+            <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+                <Text style={styles.buttonText}>Salvar e Prosseguir</Text>
+            </TouchableOpacity>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, padding: 20 },
-    label: { fontSize: 18, marginBottom: 10 },
+    container: {
+        flex: 1,
+        backgroundColor: '#5A4FCF',
+        padding: 20,
+        justifyContent: 'center',
+    },
+    title: {
+        fontSize: 26,
+        fontWeight: 'bold',
+        color: '#fff',
+        marginBottom: 30,
+        textAlign: 'center',
+    },
+    label: {
+        fontSize: 18,
+        color: '#fff',
+        marginBottom: 10,
+    },
     input: {
-        borderWidth: 1,
-        borderColor: '#ccc',
+        backgroundColor: '#fff',
         borderRadius: 8,
-        padding: 10,
-        marginBottom: 20,
+        padding: 14,
+        fontSize: 16,
+        marginBottom: 25,
+    },
+    button: {
+        backgroundColor: '#60CE4F',
+        padding: 14,
+        borderRadius: 10,
+    },
+    buttonText: {
+        color: '#fff',
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: 16,
     },
 });
