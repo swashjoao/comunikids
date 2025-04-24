@@ -36,7 +36,7 @@ export default function CommunicationScreen() {
                 contentContainerStyle={{ paddingBottom: 40 }}
                 renderItem={({ item }) => (
                     <TouchableOpacity style={styles.button} onPress={() => speak(item.label)}>
-                        <MaterialCommunityIcons name={item.icon} size={40} color="#fff" />
+                        <MaterialIcons name="arrow-back" size={24} color="#fff" />
                         <Text style={styles.buttonText}>{item.label}</Text>
                     </TouchableOpacity>
                 )}
