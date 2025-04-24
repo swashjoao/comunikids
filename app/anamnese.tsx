@@ -1,22 +1,37 @@
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import {
+    View,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    StyleSheet,
+    Alert,
+    ScrollView,
+} from 'react-native';
 import { useState } from 'react';
 import { Stack, useRouter } from 'expo-router';
 import { MaterialIcons } from '@expo/vector-icons';
 
 export default function AnamneseScreen() {
     const [name, setName] = useState('');
+    const [age, setAge] = useState('');
+    const [gender, setGender] = useState('');
+    const [notes, setNotes] = useState('');
     const router = useRouter();
 
     const handleSubmit = () => {
-        if (name.trim()) {
-            router.push({ pathname: '/comunicar', params: { userName: name } });
-        } else {
-            Alert.alert('Erro', 'Digite o nome da criança.');
+        if (!name.trim() || !age.trim() || !gender.trim()) {
+            Alert.alert('Erro', 'Preencha todos os campos obrigatórios.');
+            return;
         }
+
+        router.push({
+            pathname: '/comunicar',
+            params: { userName: name },
+        });
     };
 
     return (
-        <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
             <Stack.Screen options={{ headerShown: false }} />
 
             <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/home')}>
@@ -26,7 +41,7 @@ export default function AnamneseScreen() {
 
             <Text style={styles.title}>Anamnese</Text>
 
-            <Text style={styles.label}>Nome da criança</Text>
+            <Text style={styles.label}>Nome da criança *</Text>
             <TextInput
                 style={styles.input}
                 placeholder="Digite aqui..."
@@ -35,24 +50,52 @@ export default function AnamneseScreen() {
                 onChangeText={setName}
             />
 
+            <Text style={styles.label}>Idade *</Text>
+            <TextInput
+                style={styles.input}
+                placeholder="Ex: 6"
+                keyboardType="numeric"
+                placeholderTextColor="#999"
+                value={age}
+                onChangeText={setAge}
+            />
+
+            <Text style={styles.label}>Gênero *</Text>
+            <TextInput
+                style={styles.input}
+                placeholder="Ex: Feminino, Masculino, Outro"
+                placeholderTextColor="#999"
+                value={gender}
+                onChangeText={setGender}
+            />
+
+            <Text style={styles.label}>Observações (opcional)</Text>
+            <TextInput
+                style={[styles.input, { height: 100 }]}
+                placeholder="Descreva necessidades específicas, preferências, etc."
+                placeholderTextColor="#999"
+                multiline
+                value={notes}
+                onChangeText={setNotes}
+            />
+
             <TouchableOpacity style={styles.button} onPress={handleSubmit}>
                 <Text style={styles.buttonText}>Salvar e Prosseguir</Text>
             </TouchableOpacity>
-        </View>
+        </ScrollView>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
+    scrollContainer: {
+        flexGrow: 1,
         backgroundColor: '#5A4FCF',
         padding: 20,
-        justifyContent: 'center',
+        paddingTop: 100,
     },
     backButton: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 20,
         position: 'absolute',
         top: 60,
         left: 20,
@@ -67,25 +110,26 @@ const styles = StyleSheet.create({
         fontSize: 26,
         fontWeight: 'bold',
         color: '#fff',
-        marginBottom: 40,
+        marginBottom: 30,
         textAlign: 'center',
     },
     label: {
-        fontSize: 18,
+        fontSize: 16,
         color: '#fff',
-        marginBottom: 10,
+        marginBottom: 6,
+        marginTop: 12,
     },
     input: {
         backgroundColor: '#fff',
         borderRadius: 8,
         padding: 14,
         fontSize: 16,
-        marginBottom: 25,
     },
     button: {
         backgroundColor: '#60CE4F',
         padding: 14,
         borderRadius: 10,
+        marginTop: 30,
     },
     buttonText: {
         color: '#fff',
