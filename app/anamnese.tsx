@@ -1,6 +1,7 @@
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { useState } from 'react';
 import { Stack, useRouter } from 'expo-router';
+import { MaterialIcons } from '@expo/vector-icons';
 
 export default function AnamneseScreen() {
     const [name, setName] = useState('');
@@ -17,6 +18,11 @@ export default function AnamneseScreen() {
     return (
         <View style={styles.container}>
             <Stack.Screen options={{ headerShown: false }} />
+
+            <TouchableOpacity style={styles.backButton} onPress={() => router.replace('/home')}>
+                <MaterialIcons name="arrow-back" size={24} color="#fff" />
+                <Text style={styles.backText}>Voltar</Text>
+            </TouchableOpacity>
 
             <Text style={styles.title}>Anamnese</Text>
 
@@ -43,11 +49,25 @@ const styles = StyleSheet.create({
         padding: 20,
         justifyContent: 'center',
     },
+    backButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 20,
+        position: 'absolute',
+        top: 60,
+        left: 20,
+    },
+    backText: {
+        color: '#fff',
+        fontSize: 16,
+        marginLeft: 5,
+        fontWeight: 'bold',
+    },
     title: {
         fontSize: 26,
         fontWeight: 'bold',
         color: '#fff',
-        marginBottom: 30,
+        marginBottom: 40,
         textAlign: 'center',
     },
     label: {
