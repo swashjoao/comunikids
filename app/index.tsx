@@ -40,7 +40,8 @@ export default function LoginScreen() {
                 <MaterialIcons name="email" size={20} color="#999" style={styles.icon} />
                 <TextInput
                     style={styles.input}
-                    placeholder="Digite aqui..."
+                    placeholder="Digite seu e-mail ou nome de usuário"
+                    placeholderTextColor="#999"
                     keyboardType="email-address"
                     autoCapitalize="none"
                     value={email}
@@ -52,7 +53,8 @@ export default function LoginScreen() {
                 <MaterialIcons name="lock" size={20} color="#999" style={styles.icon} />
                 <TextInput
                     style={styles.input}
-                    placeholder="Digite aqui..."
+                    placeholder="Digite sua senha"
+                    placeholderTextColor="#999"
                     secureTextEntry
                     value={senha}
                     onChangeText={setSenha}
