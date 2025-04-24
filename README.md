@@ -46,7 +46,7 @@ Escaneie o QR code no terminal com o Expo Go no seu celular 📲
 ```
 app/
 ├── _layout.tsx          # Stack Navigation base
-├── login.tsx            # Tela de Login
+├── index.tsx            # Tela de Login
 ├── home.tsx             # Tela principal
 ├── anamnese.tsx         # Cadastro da criança
 └── comunicar.tsx        # Tela com frases e voz
