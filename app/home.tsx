@@ -1,4 +1,4 @@
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
 
 export default function HomeScreen() {
@@ -6,15 +6,52 @@ export default function HomeScreen() {
 
     return (
         <View style={styles.container}>
-            <Stack.Screen options={{ title: 'ComuniKids' }} />
+            <Stack.Screen options={{ headerShown: false }} />
+
             <Text style={styles.title}>ComuniKids</Text>
-            <Button title="Iniciar Anamnese" onPress={() => router.push('/anamnese')} />
-            <Button title="Comunicar" onPress={() => router.push('/comunicar')} />
+
+            <TouchableOpacity style={styles.buttonPrimary} onPress={() => router.push('/anamnese')}>
+                <Text style={styles.buttonText}>Iniciar Anamnese</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.buttonSecondary} onPress={() => router.push('/comunicar')}>
+                <Text style={styles.buttonText}>Comunicar</Text>
+            </TouchableOpacity>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, alignItems: 'center', justifyContent: 'center' },
-    title: { fontSize: 24, marginBottom: 20 },
+    container: {
+        flex: 1,
+        backgroundColor: '#5A4FCF',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+    },
+    title: {
+        fontSize: 28,
+        fontWeight: 'bold',
+        color: 'white',
+        marginBottom: 40,
+    },
+    buttonPrimary: {
+        backgroundColor: '#60CE4F',
+        padding: 16,
+        borderRadius: 10,
+        width: '100%',
+        marginBottom: 20,
+    },
+    buttonSecondary: {
+        backgroundColor: '#FFB84C',
+        padding: 16,
+        borderRadius: 10,
+        width: '100%',
+    },
+    buttonText: {
+        color: '#fff',
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: 16,
+    },
 });
