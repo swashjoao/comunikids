@@ -4,9 +4,9 @@ import * as Speech from 'expo-speech';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 
 const phrases = [
-    { id: '1', label: 'Estou com fome', icon: 'food' },
+    { id: '1', label: 'Estou com fome', icon: 'food-apple' },
     { id: '2', label: 'Quero beber água', icon: 'cup-water' },
-    { id: '3', label: 'Estou feliz', icon: 'emoticon-happy' },
+    { id: '3', label: 'Estou feliz', icon: 'emoticon-happy-outline' },
 ];
 
 export default function CommunicationScreen() {
@@ -36,7 +36,7 @@ export default function CommunicationScreen() {
                 contentContainerStyle={{ paddingBottom: 40 }}
                 renderItem={({ item }) => (
                     <TouchableOpacity style={styles.button} onPress={() => speak(item.label)}>
-                        <MaterialIcons name="arrow-back" size={24} color="#fff" />
+                        <MaterialCommunityIcons name={item.icon} size={40} color="#fff" />
                         <Text style={styles.buttonText}>{item.label}</Text>
                     </TouchableOpacity>
                 )}
