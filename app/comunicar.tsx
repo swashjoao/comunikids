@@ -1,21 +1,41 @@
-import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import { useEffect, useState } from 'react';
+import {
+    View,
+    Text,
+    FlatList,
+    TouchableOpacity,
+    StyleSheet,
+    ActivityIndicator,
+} from 'react-native';
 import { useLocalSearchParams, Stack, useRouter } from 'expo-router';
 import * as Speech from 'expo-speech';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
-
-const phrases = [
-    { id: '1', label: 'Estou com fome', icon: 'food-apple' },
-    { id: '2', label: 'Quero beber água', icon: 'cup-water' },
-    { id: '3', label: 'Estou feliz', icon: 'emoticon-happy-outline' },
-];
+import { listarFrases } from './services/frases'; // 👈 função que busca do backend
 
 export default function CommunicationScreen() {
     const { userName } = useLocalSearchParams();
     const router = useRouter();
+    const [frases, setFrases] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
 
     const speak = (text: string) => {
         Speech.speak(text, { language: 'pt' });
     };
+
+    useEffect(() => {
+        async function carregarFrases() {
+            try {
+                const data = await listarFrases();
+                setFrases(data);
+            } catch (err) {
+                console.error('Erro ao buscar frases', err);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        carregarFrases();
+    }, []);
 
     return (
         <View style={styles.container}>
@@ -28,22 +48,31 @@ export default function CommunicationScreen() {
 
             <Text style={styles.header}>Olá {userName ?? 'Usuário'}</Text>
 
-            <FlatList
-                data={phrases}
-                keyExtractor={(item) => item.id}
-                numColumns={2}
-                columnWrapperStyle={styles.row}
-                contentContainerStyle={{ paddingBottom: 40 }}
-                renderItem={({ item }) => (
-                    <TouchableOpacity style={styles.button} onPress={() => speak(item.label)}>
-                        <MaterialCommunityIcons name={item.icon} size={40} color="#fff" />
-                        <Text style={styles.buttonText}>{item.label}</Text>
-                    </TouchableOpacity>
-                )}
-            />
+            {loading ? (
+                <ActivityIndicator size="large" color="#fff" />
+            ) : frases.length === 0 ? (
+                <Text style={{ color: '#fff', textAlign: 'center' }}>
+                    Nenhuma frase cadastrada ainda.
+                </Text>
+            ) : (
+                <FlatList
+                    data={frases}
+                    keyExtractor={(item) => item.id.toString()}
+                    numColumns={2}
+                    columnWrapperStyle={styles.row}
+                    contentContainerStyle={{ paddingBottom: 40 }}
+                    renderItem={({ item }) => (
+                        <TouchableOpacity style={styles.button} onPress={() => speak(item.texto)}>
+                            <MaterialCommunityIcons name="message-outline" size={40} color="#fff" />
+                            <Text style={styles.buttonText}>{item.texto}</Text>
+                        </TouchableOpacity>
+                    )}
+                />
+            )}
         </View>
     );
 }
+
 
 const styles = StyleSheet.create({
     container: {

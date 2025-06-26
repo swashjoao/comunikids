@@ -17,8 +17,13 @@ export default function HomeScreen() {
             <TouchableOpacity style={styles.buttonSecondary} onPress={() => router.push('/comunicar')}>
                 <Text style={styles.buttonText}>Comunicar</Text>
             </TouchableOpacity>
+
+            <TouchableOpacity style={styles.buttonTertiary} onPress={() => router.push('/adicionarFrase')}>
+                <Text style={styles.buttonText}>Adicionar Frase</Text>
+            </TouchableOpacity>
         </View>
     );
+
 }
 
 const styles = StyleSheet.create({
@@ -47,6 +52,13 @@ const styles = StyleSheet.create({
         padding: 16,
         borderRadius: 10,
         width: '100%',
+    },
+    buttonTertiary: {
+        backgroundColor: '#4FC3F7',
+        padding: 16,
+        borderRadius: 10,
+        width: '100%',
+        marginTop: 20,
     },
     buttonText: {
         color: '#fff',

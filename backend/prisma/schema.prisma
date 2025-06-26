@@ -15,18 +15,10 @@ model Usuario {
   frases   Frase[]
 }
 
-model Categoria {
-  id     Int     @id @default(autoincrement())
-  nome   String
-  frases Frase[]
-}
-
 model Frase {
-  id           Int       @id @default(autoincrement())  // AQUI TAVA ERRADO!
-  texto        String
-  usuarioId    Int
-  categoriaId  Int
-  usuario      Usuario   @relation(fields: [usuarioId], references: [id])
-  categoria    Categoria @relation(fields: [categoriaId], references: [id])
-  criadoEm     DateTime  @default(now())
+  id        Int      @id @default(autoincrement())
+  texto     String
+  usuarioId Int
+  usuario   Usuario  @relation(fields: [usuarioId], references: [id])
+  criadoEm  DateTime @default(now())
 }
