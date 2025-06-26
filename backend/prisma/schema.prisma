@@ -1,0 +1,32 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id       Int      @id @default(autoincrement())
+  nome     String
+  email    String   @unique
+  senha    String
+  frases   Frase[]
+}
+
+model Categoria {
+  id     Int     @id @default(autoincrement())
+  nome   String
+  frases Frase[]
+}
+
+model Frase {
+  id           Int       @id @default(autoincrement())  // AQUI TAVA ERRADO!
+  texto        String
+  usuarioId    Int
+  categoriaId  Int
+  usuario      Usuario   @relation(fields: [usuarioId], references: [id])
+  categoria    Categoria @relation(fields: [categoriaId], references: [id])
+  criadoEm     DateTime  @default(now())
+}
